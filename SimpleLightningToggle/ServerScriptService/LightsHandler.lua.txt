@@ -1,0 +1,38 @@
+local CollectionService = game:GetService("CollectionService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local LightingService = game:GetService("Lighting")
+
+local LightningConfigs = require(ReplicatedStorage.Configs)
+
+local function TurnLights(toggle: boolean)
+	if toggle then
+		for _, lightPoint in CollectionService:GetTagged(LightningConfigs.TagInstanceName) do
+			if lightPoint:IsA("PointLight") then
+				if not lightPoint.Enabled then
+					lightPoint.Enabled = true
+				end
+			end
+			task.wait(0.15)
+		end
+	else
+		for _, lightPoint in CollectionService:GetTagged(LightningConfigs.TagInstanceName) do
+			if lightPoint:IsA("PointLight") then
+				if not lightPoint.Enabled then
+					lightPoint.Enabled = true
+				end
+			end
+			task.wait(0.15)
+		end
+	end
+end
+
+LightingService:GetPropertyChangedSignal("ClockTime"):Connect(function()
+	local CurrentHour = LightingService.ClockTime
+	if CurrentHour > LightningConfigs.TimeLights then
+		print(`Is Too Late {CurrentHour}`)
+		TurnLights(true)
+	else
+		print(`Is Too Early {CurrentHour}`)
+		TurnLights(false)
+	end
+end)

@@ -1,0 +1,4 @@
+return {
+	TimeLights = 17.7,
+	TagInstanceName = "NightLights",
+}
